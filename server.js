@@ -3,8 +3,6 @@ const { MongoClient } = require('mongodb');
 var cors = require('cors');
 require('dotenv').config()
 const axios = require('axios');
-const fetch = require('node-fetch');
-
 
 const PORT = process.env.PORT || 3000
 
@@ -15,39 +13,33 @@ const uri = process.env.MONGODB_URI;
 
 
 app.post('/api/chat', async (req, res) => {
-  const apiUrl = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
-  const apiKey = process.env.CHATGPT_API_KEY;
-
-  const { message } = req.body;
   try {
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        prompt: message,
+    const apiKey = process.env.CHATGPT_API_KEY; // Переменная окружения с API-ключом ChatGPT
+    const { message } = req.body;
+
+    // Запрос к API ChatGPT
+    const response = await axios.post('https://api.openai.com/v1/engines/text-davinci-003/completions', {
+        prompt:message,
         max_tokens: 500,
         temperature: 0.7,
         top_p: 1.0,
         n: 1,
         stop: null,
-      }),
+    }, {
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
     });
 
-    const data = await response.json();
-    const reply = data.choices[0].text.trim();
+    const { choices } = response.data;
+    const reply = choices[0].text.trim();
 
     res.json({ reply });
   } catch (error) {
-    console.error('Ошибка при выполнении запроса:', error);
+    console.error('Ошибка при обращении к API ChatGPT:', error.message);
     res.status(500).json({ error: 'Ошибка сервера' });
   }
-
-
-
-
 });
 
 app.get('/api/comments', async (req, res) => {
