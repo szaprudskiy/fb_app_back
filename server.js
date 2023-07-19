@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 const uri = process.env.MONGODB_URI;
 
+app.use(express.static('frontend'));
 
 app.post('/api/chat', async (req, res) => {
   try {
