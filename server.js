@@ -7,17 +7,9 @@ const app = express();
 
 const PORT = process.env.PORT || 3000
 
-const allowedOrigins = ['https://frontend-pink-theta.vercel.app/'];
+// Разрешаем CORS только для определенного домена
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',
+  origin: 'https://frontend-pink-theta.vercel.app',
 };
 
 app.use(cors(corsOptions));
