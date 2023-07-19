@@ -7,12 +7,12 @@ const app = express();
 
 const PORT = process.env.PORT || 3000
 
-// Разрешаем CORS только для определенного домена
-const corsOptions = {
-  origin: 'https://frontend-pink-theta.vercel.app',
-};
-
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+}));
 
 app.use(express.json());
 const uri = process.env.MONGODB_URI;
