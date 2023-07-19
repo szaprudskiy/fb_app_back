@@ -7,7 +7,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000
 
-const allowedOrigins = ['https://frontend-pink-theta.vercel.app/', 'https://fb-comments.vercel.app/'];
+const allowedOrigins = ['https://frontend-pink-theta.vercel.app/'];
 const corsOptions = {
   origin: function (origin, callback) {
     if (allowedOrigins.includes(origin) || !origin) {
