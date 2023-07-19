@@ -3,11 +3,25 @@ const { MongoClient } = require('mongodb');
 var cors = require('cors');
 require('dotenv').config()
 const axios = require('axios');
+const app = express();
 
 const PORT = process.env.PORT || 3000
 
-const app = express();
-app.use(cors());
+const allowedOrigins = ['https://frontend-pink-theta.vercel.app/', 'https://fb-comments.vercel.app/'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 const uri = process.env.MONGODB_URI;
 
