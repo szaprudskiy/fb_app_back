@@ -7,12 +7,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000
 
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
-}));
+app.use(cors());
 
 app.use(express.json());
 const uri = process.env.MONGODB_URI;
