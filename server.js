@@ -7,9 +7,18 @@ const app = express();
 
 const PORT = process.env.PORT || 3000
 
+const allowedOrigins = ['https://frontend-pink-theta.vercel.app'];
+
 app.use(cors({
-  origin: 'https://frontend-pink-theta.vercel.app/'
-}))
+  origin: (origin, callback) => {
+    // Проверяем, что запрос происходит с разрешенного домена
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Недопустимый домен для CORS'));
+    }
+  },
+}));
 
 app.use(express.json());
 const uri = process.env.MONGODB_URI;
