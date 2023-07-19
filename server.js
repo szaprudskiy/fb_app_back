@@ -7,7 +7,12 @@ const app = express();
 
 const PORT = process.env.PORT || 3000
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://frontend-pink-theta.vercel.app/', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization'],
+  credentials: true
+}))
 
 app.use(express.json());
 const uri = process.env.MONGODB_URI;
