@@ -7,7 +7,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000
 
-const allowedOrigins = ['https://frontend-pink-theta.vercel.app'];
+const allowedOrigins = ['https://frontend-pink-theta.vercel.app', 'http://127.0.0.1:5500/'];
 
 app.use(cors({
   origin: (origin, callback) => {
